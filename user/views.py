@@ -96,15 +96,13 @@ def user_all_bookings(request):
 
 ## event ## 
 
-
+@login_required
 def user_event_list(request):
-    """List available events for users."""
     events = Event.objects.all()
     return render(request, "user_event_list.html", {"events": events})
 
 @login_required
 def user_book_event(request, event_id):
-    """Allows a user to book an event."""
     event = get_object_or_404(Event, id=event_id)
 
     if request.method == "POST":
@@ -146,13 +144,11 @@ def user_book_event(request, event_id):
 
 @login_required
 def user_event_bookings(request):
-    """Lists all bookings made by a user."""
     bookings = BookEvent.objects.filter(user=request.user)
     return render(request, "user_bookings_event.html", {"bookings": bookings})
 
 @login_required
 def event_payment(request, booking_id):
-    """Handles payment for a booked event."""
     booking = get_object_or_404(BookEvent, id=booking_id, user=request.user)
 
     if booking.status != "Approved":
@@ -185,7 +181,6 @@ def event_payment(request, booking_id):
 
 @login_required
 def event_payment_status(request):
-    """Displays payment history for users and service providers."""
     user_payments = Payment.objects.filter(user=request.user)
 
     service_provider = ServiceProvider.objects.filter(user=request.user).first()
@@ -258,14 +253,12 @@ def venue_payment(request, booking_id):
         messages.error(request, "You can only pay for confirmed bookings.")
         return redirect("user_bookings")
 
-    provider = booking.venue.provider  # Ensure Venue model has a provider field
+    provider = booking.venue.provider  
     amount = booking.venue.price
 
     if request.method == "POST":
-        # Generate a dummy transaction ID
         transaction_id = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
 
-        # Store payment record
         Payment.objects.create(
             user=request.user,
             service_provider=provider,
@@ -276,7 +269,7 @@ def venue_payment(request, booking_id):
             status="paid",
         )
 
-        # Update booking status
+
         booking.status = "Paid"
         booking.save()
 
@@ -287,7 +280,6 @@ def venue_payment(request, booking_id):
 
 @login_required
 def venue_payment_status(request):
-    """Shows payment history for users and service providers"""
     user_payments = Payment.objects.filter(user=request.user)
 
     service_provider = ServiceProvider.objects.filter(user=request.user).first()
@@ -430,7 +422,6 @@ def book_catering(request, catering_id):
         if is_booked:
             messages.error(request, "This catering service is already booked on the selected date. Please choose another date.")
         else:
-            # Create booking
             CateringBooking.objects.create(
                 user=request.user,
                 service=catering,
@@ -822,115 +813,4 @@ def whatsapp(request):
 
 
 
-
-# @login_required
-# def venue_list(request):
-#     venues = Venue.objects.filter(available=True)
-#     return render(request, 'user_venue.html', {'venues': venues})
-
-# @login_required
-# def book_venue(request, venue_id):
-#     venue = get_object_or_404(Venue, id=venue_id, available=True)
-
-#     if request.method == "POST":
-#         event_date = request.POST.get('event_date')
-#         venue_customize=request.POST.get('venue_customize')
-#         event_date = datetime.strptime(event_date, "%Y-%m-%d").date()
-
-#         if event_date < date.today():
-#             messages.error(request, "You cannot book a venue for a past date.")
-#             return redirect('book_venue', venue_id=venue_id)
-        
-#         is_booked = ServiceAvailability.objects.filter(
-#             service_type="Venue", 
-#             service_id=venue.id, 
-#             booked_date=event_date
-#         ).exists()
-
-#         if is_booked:
-#             messages.error(request, "This venue is already booked on the selected date. Please choose another date.")
-#         else:
-#             VenueBooking.objects.create(
-#                 user=request.user, 
-#                 venue=venue, 
-#                 event_date=event_date, 
-#                 venue_customize=venue_customize,
-#                 status="Pending"
-#             )
-#             ServiceAvailability.objects.create(
-#                 service_type="Venue",
-#                 service_id=venue.id,
-#                 booked_date=event_date
-#             )
-
-#             messages.success(request, "Venue booking request submitted successfully!")
-#             return redirect('user_bookings')
-
-#     return render(request, 'book_venue.html', {'venue': venue})
-
-# @login_required
-# def user_bookings(request):
-#     bookings = VenueBooking.objects.filter(user=request.user)
-#     return render(request, 'user_booking_status.html', {'bookings': bookings})
-
-
-
-
-
-# @login_required
-# def user_catering_list(request):
-#     services = CateringService.objects.filter(available=True)
-#     return render(request, 'user_catering_list.html', {'services': services})
-
-# @login_required
-# def user_book_catering(request, cater_id):
-#     service = get_object_or_404(CateringService, id=cater_id,available=True)
-    
-#     if request.method == 'POST':
-#         event_date = request.POST.get('event_date')
-#         guests = request.POST.get('guests')
-#         customize_food=request.POST.get('customize_food')
-
-#         if not event_date or not guests or not customize_food:
-#             messages.error(request, "All fields are required!")
-#             return redirect('user_book_catering', cater_id=cater_id)
-
-#         event_date = date.fromisoformat(event_date)  # Convert string to date
-#         if event_date < date.today():
-#             messages.error(request, "Event date must be in the future!")
-#             return redirect('user_book_catering', cater_id=cater_id)
-        
-#         is_booked = ServiceAvailability.objects.filter(
-#             service_type="Catering", 
-#             service_id=service.id, 
-#             booked_date=event_date
-#         ).exists()
-
-#         if is_booked:
-#             messages.error(request, "This catering service is already booked on the selected date. Please choose another date.")
-#         else:
-#             CateringBooking.objects.create(
-#                 user=request.user,
-#                 service=service,
-#                 event_date=event_date,
-#                 guests=guests,
-#                 customize_food=customize_food,
-#                 status="Pending"
-#             )
-
-#             ServiceAvailability.objects.create(
-#                 service_type='Catering',
-#                 service_id=service.id,
-#                 booked_date=event_date,
-
-#             )
-#             messages.success(request, "catering service service booked successfully!")
-#         return redirect('user_catering_bookings')
-
-#     return render(request, 'user_book_catering.html', {'service': service})
-
-# @login_required
-# def user_catering_bookings(request):
-#     bookings = CateringBooking.objects.filter(user=request.user)
-#     return render(request, 'user_catering_bookings.html', {'bookings': bookings})
 
