@@ -1,0 +1,58 @@
+{% extends 'provider_header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Bookings</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Manage Event Bookings</h2>
+
+    <table class="table table-bordered bg-white shadow">
+        <thead class="table-dark">
+            <tr>
+                
+                <th>Customername</th>
+                <th>CustomerPhone</th>
+                <th>Event</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.user.username }}</td>
+                <td>{{ booking.user.phone }}</td>
+                <td>{{ booking.event.name }}</td>
+                <td>
+                    {% if booking.status == "Approved" %}
+                        <span class="badge bg-success">Approved</span>
+                    {% elif booking.status == "Rejected" %}
+                        <span class="badge bg-danger">Rejected</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'approve_event_booking' booking.id %}" class="btn btn-success btn-sm">Approve</a>
+                    <a href="{% url 'reject_event_booking' booking.id %}" class="btn btn-danger btn-sm">Reject</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No bookings found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+{% endblock %}

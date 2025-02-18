@@ -1,0 +1,21 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<h2 class="text-center mb-4">Available Events</h2>
+<div class="row">
+    {% for event in events %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img src="{{ event.image.url }}" class="card-img-top" alt="{{ event.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ event.name }}</h5>
+                <p class="card-text">{{ event.description }}</p>
+                <p><strong>Location:</strong> {{ event.location }}</p>
+                <p><strong>Price:</strong> ${{ event.price }}</p>
+                <a href="{% url 'user_book_event' event.id %}" class="btn btn-primary">Book Now</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

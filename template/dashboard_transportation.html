@@ -1,0 +1,64 @@
+{% extends 'provider_header.html' %}
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3 bg-white rounded">
+                <h4 class="text-center">Welcome, {{ user.username }}!</h4>
+                <hr>
+                <p><strong>Company:</strong> {{ service_provider.company_name }}</p>
+                <p><strong>Service Type:</strong> {{ service_provider.service_type }}</p>
+            </div>
+            <div class="list-group mt-3 shadow-sm">
+                <a href="{% url 'add_transport' %}" class="list-group-item list-group-item-action">🚗 Add Transport Service</a>
+                <a href="{% url 'service_provider_transports_list' %}" class="list-group-item list-group-item-action">🛠 Manage Transport Services</a>
+                <a href="{% url 'manage_transport_bookings' %}" class="list-group-item list-group-item-action">✅ Manage Transport Bookings</a>
+                <a href="{% url 'servicer_logout' %}" class="list-group-item list-group-item-action text-danger">🚪 Logout</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+            <div class="card shadow-lg p-4 bg-white rounded">
+                <h3 class="text-center">Transport Provider Dashboard</h3>
+                <p class="text-muted text-center">Manage your transport services and bookings easily.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary shadow-sm p-3">
+                            <h5>Add Transport Service</h5>
+                            <p>List a new transport service.</p>
+                            <a href="{% url 'add_transport' %}" class="btn btn-light btn-sm">Go ➜</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success shadow-sm p-3">
+                            <h5>Manage Transport Services</h5>
+                            <p>Update or remove existing transport listings.</p>
+                            <a href="{% url 'service_provider_transports_list' %}" class="btn btn-light btn-sm">Go ➜</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card text-white bg-warning shadow-sm p-3">
+                            <h5>Manage Transport Bookings</h5>
+                            <p>Approve or reject customer transport bookings.</p>
+                            <a href="{% url 'manage_transport_bookings' %}" class="btn btn-light btn-sm">Go ➜</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mt-3">
+                        <div class="card text-white bg-danger shadow-sm p-3">
+                            <h5>Logout</h5>
+                            <p>Sign out from your account.</p>
+                            <a href="{% url 'servicer_logout' %}" class="btn btn-light btn-sm">Go ➜</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+{% endblock %}

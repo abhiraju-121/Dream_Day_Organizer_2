@@ -1,0 +1,42 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg p-4 border-0 rounded-4">
+                <div class="card-body text-center">
+                    <h2 class="mb-4 fw-bold">Your Bookings</h2>
+                    <p class="text-muted">Manage all your bookings conveniently from here.</p>
+                    <hr class="mb-4">
+
+                    <div class="d-flex flex-column gap-3">
+                        <a href="{% url 'user_catering_bookings' %}" class="btn btn-outline-primary d-flex align-items-center">
+                            <i class="bi bi-basket2-fill me-2"></i> Catering Bookings
+                        </a>
+                        <a href="{% url 'user_transport_bookings' %}" class="btn btn-outline-success d-flex align-items-center">
+                            <i class="bi bi-bus-front-fill me-2"></i> Transportation Bookings
+                        </a>
+                        <a href="{% url 'user_bookings' %}" class="btn btn-outline-warning d-flex align-items-center">
+                            <i class="bi bi-building-fill me-2"></i> Venue Bookings
+                        </a>
+                        <a href="{% url 'user_event_bookings' %}" class="btn btn-outline-info d-flex align-items-center">
+                            <i class="bi bi-calendar-event-fill me-2"></i> Event Bookings
+                        </a>
+                        <a href="{% url 'user_decorations_bookings' %}" class="btn btn-outline-secondary d-flex align-items-center">
+                            <i class="bi bi-palette-fill me-2"></i> Decoration Bookings
+                        </a>
+                        <a href="{% url 'user_photography_bookings' %}" class="btn btn-outline-danger d-flex align-items-center">
+                            <i class="bi bi-camera-fill me-2"></i> Photo & Video Bookings
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bridal & Groom Payment Status</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Bridal & Groom Payment Status</h2>
+
+    <h4>User Payments</h4>
+    <table class="table table-bordered bg-white shadow">
+        <thead class="table-dark">
+            <tr>
+                <th>Service</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in user_payments %}
+            <tr>
+                <td>{{ payment.booking_id }}</td>
+                <td>${{ payment.amount }}</td>
+                <td>{{ payment.status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">No payments found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if provider_payments %}
+    <h4 class="mt-5">Provider Payments</h4>
+    <table class="table table-bordered bg-white shadow">
+        <thead class="table-dark">
+            <tr>
+                <th>Booking ID</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment in provider_payments %}
+            <tr>
+                <td>{{ payment.booking_id }}</td>
+                <td>${{ payment.amount }}</td>
+                <td>{{ payment.status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="text-center">No payments found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+</body>
+</html>
+
+{% endblock %}

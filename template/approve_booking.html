@@ -1,0 +1,44 @@
+
+<div class="container">
+    <h2>Approve Bookings</h2>
+
+    {% if bookings %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Event Name</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.event.name }}</td>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.status }}</td>
+                    <td>
+                        {% if booking.status != "confirmed" %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="booking_id" value="{{ booking.id }}">
+                                <button type="submit">Approve</button>
+                            </form>
+                        {% else %}
+                            Confirmed ✅
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No pending bookings.</p>
+    {% endif %}
+
+    <a href="{% url 'servicer_dashboard' %}">Back to Dashboard</a>
+</div>
+

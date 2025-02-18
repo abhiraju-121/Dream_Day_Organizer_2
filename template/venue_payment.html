@@ -1,0 +1,73 @@
+{% extends "header.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venue Payment</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .payment-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .payment-container h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .payment-details p {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+        .payment-details span {
+            font-weight: bold;
+            color: #28a745;
+        }
+        .pay-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+        .pay-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="payment-container">
+    <h2>💳 Venue Payment</h2>
+    
+    <div class="payment-details">
+        <p><strong>Venue:</strong> <span>{{ booking.venue.name }}</span></p>
+        <p><strong>Event Date:</strong> <span>{{ booking.event_date }}</span></p>
+        <p><strong>Amount:</strong> <span>${{ booking.venue.price }}</span></p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="pay-btn">Pay Now</button>
+    </form>
+</div>
+
+</body>
+</html>
+{% endblock %}

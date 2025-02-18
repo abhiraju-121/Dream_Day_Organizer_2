@@ -1,0 +1,118 @@
+{% extends 'provider_header.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Venues</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .venue-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .venue-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .venue-card:hover {
+            transform: scale(1.02);
+        }
+        .venue-info {
+            flex-grow: 1;
+        }
+        .venue-info h3 {
+            font-size: 20px;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .venue-info p {
+            font-size: 15px;
+            color: #555;
+            margin: 0;
+        }
+        .venue-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .venue-actions a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .edit-btn {
+            background-color: #ffc107;
+            color: black;
+        }
+        .edit-btn:hover {
+            background-color: #e0a800;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+        .add-btn {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .add-btn:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container venue-container">
+    <h2 class="text-center text-primary mb-4">Manage Venues</h2>
+
+    {% for venue in venues %}
+    <div class="venue-card">
+        <div class="venue-info">
+            <h3>{{ venue.name }}</h3>
+            <p><strong>📍 Location:</strong> {{ venue.location }}</p>
+        </div>
+        <div class="venue-actions">
+            <a href="{% url 'edit_venue' venue.id %}" class="edit-btn">✏️ Edit</a>
+            <a href="{% url 'delete_venue' venue.id %}" class="delete-btn">🗑️ Delete</a>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted">No venues added yet.</p>
+    {% endfor %}
+
+    <a href="{% url 'add_venue' %}" class="add-btn">➕ Add New Venue</a>
+</div>
+
+</body>
+</html>
+
+{% endblock %}

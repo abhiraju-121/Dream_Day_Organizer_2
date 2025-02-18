@@ -1,0 +1,49 @@
+{% extends 'header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Transportation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Book Transportation: {{ service.name }}</h2>
+    
+    <form method="POST" class="bg-white p-4 shadow rounded">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Event Date</label>
+            <input type="date" name="event_date" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Vehicle Type</label>
+            <select name="vehicle_type" class="form-control" required>
+                <option value="" disabled selected>Select Vehicle Type</option>
+                <option value="A/C-Bus">A/C Bus</option>
+                <option value="Non-A/C-Bus">Non-A/C Bus</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Seats Required</label>
+            <select name="seats" class="form-control" required>
+                <option value="" disabled selected>Select Seat Capacity</option>
+                <option value="30">30 Seats</option>
+                <option value="45">45 Seats</option>
+            </select>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="rent_car" class="form-check-input">
+            <label class="form-check-label">Rent a Car</label>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Book Now</button>
+    </form>
+</div>
+
+</body>
+</html>
+{% endblock %}

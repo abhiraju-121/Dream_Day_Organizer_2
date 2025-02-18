@@ -1,0 +1,51 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="row w-100 justify-content-center">
+        <!-- User Profile Section -->
+        <div class="col-md-6">
+            <div class="card shadow-lg p-4">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-4">User Profile</h4>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="username">Username</label>
+                            <input type="text" name="username" class="form-control" id="username" value="{{ user.username }}" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone">Phone Number</label>
+                            <input type="text" name="phone" class="form-control" id="phone" value="{{ user.phone }}" required>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="email">Email Address</label>
+                            <input type="email" name="email" class="form-control" id="email" value="{{ user.email }}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>   
+    </div>
+</div>
+        <!-- User Bookings Navigation Section -->
+
+        <!-- <div class="col-md-8">
+            <div class="card shadow-lg p-4">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">Go to Your Bookings Pages</h2>
+                    <div class="d-flex justify-content-start flex-column">
+                        <a href="{% url 'user_catering_bookings' %}" class="btn btn-outline-primary mb-2">Your Catering Bookings</a>
+                        <a href="{% url 'user_transport_bookings' %}" class="btn btn-outline-success mb-2">Your Transportation Bookings</a>
+                        <a href="{% url 'user_bookings' %}" class="btn btn-outline-warning mb-2">Your Venue Bookings</a>
+                        <a href="{% url 'user_event_bookings' %}" class="btn btn-outline-info mb-2">Your Event Bookings</a>
+                        <a href="{% url 'user_decorations_bookings' %}" class="btn btn-outline-secondary-info mb-2">Your Decoration Bookings</a>
+                        <a href="{% url 'user_photography_bookings' %}" class="btn btn-outline-danger-info mb-2">Your Photo & video Bookings</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+{% endblock %}

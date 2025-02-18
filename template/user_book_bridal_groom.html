@@ -1,0 +1,33 @@
+{% extends 'header.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Bridal & Groom Service</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Book Bridal & Groom Service: {{ service.name }}</h2>
+
+    <form method="POST" class="bg-white p-4 shadow rounded">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Event Date</label>
+            <input type="date" name="event_date" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Suggest a Theme</label>
+            <textarea name="suggest_theme" class="form-control" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Book Now</button>
+    </form>
+</div>
+
+</body>
+</html>
+
+{% endblock %}
